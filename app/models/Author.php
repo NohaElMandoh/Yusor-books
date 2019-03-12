@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class Author extends Model
 
     public function book()
     {
-        return $this->hasMany('App\models\Book');
+        return $this->hasMany('Models\Book');
     }
 
 }

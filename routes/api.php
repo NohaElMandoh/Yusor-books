@@ -21,9 +21,20 @@ Route::group(['prefix' =>'v1'],function(){
     Route::Post('add_book','Api\MainController@add_book');
     Route::get('authers','Api\MainController@authers');
     Route::get('departments','Api\MainController@departments');
-    Route::get('books','Api\MainController@books');
+    Route::post('books','Api\MainController@books');
+    Route::post('add_dept','Api\MainController@add_dept');
 
 
 
+//    register
+    Route::post('register','Api\AuthController@register');
+
+    Route::post('login','Api\AuthController@login');
+
+
+ Route::group(['middleware'=>'auth:students'],function(){
+     Route::post('profile','Api\AuthController@profile');
+
+ });
 
 });

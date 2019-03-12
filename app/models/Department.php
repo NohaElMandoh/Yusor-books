@@ -13,7 +13,7 @@ class Department extends Model
 
     public function book()
     {
-        return $this->hasMany('App\models\Book');
+        return $this->hasMany('Models\Book');
     }
 
 }

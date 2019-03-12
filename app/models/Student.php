@@ -9,7 +9,7 @@ class Student extends Model
 
     protected $table = 'students';
     public $timestamps = true;
-    protected $fillable = array('perso_name', 'G_email', 'photo', 'access_token', 'user_id', 'password', 'major');
+    protected $fillable = array('perso_name', 'G_email', 'photo', 'api_token', 'user_id', 'password', 'major');
 
     public function books()
     {
@@ -20,5 +20,7 @@ class Student extends Model
     {
         return $this->belongsTo('Models\Bill');
     }
-
+    protected $hidden = [
+        'password', 'api_token'
+    ];
 }
