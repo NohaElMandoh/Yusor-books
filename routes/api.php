@@ -23,8 +23,7 @@ Route::group(['prefix' =>'v1'],function(){
     Route::get('departments','Api\MainController@departments');
     Route::post('books','Api\MainController@books');
     Route::post('add_dept','Api\MainController@add_dept');
-
-
+    Route::get('transactions','Api\MainController@transactions');
 
 //    register
     Route::post('register','Api\AuthController@register');

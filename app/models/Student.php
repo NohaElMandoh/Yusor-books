@@ -7,13 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model 
 {
 
+//            $table->string('Gender', 10);
+//            $table->integer('department_id')->unsigned();;
     protected $table = 'students';
     public $timestamps = true;
-    protected $fillable = array('perso_name', 'G_email', 'photo', 'api_token', 'user_id', 'password', 'major');
+    protected $fillable = array('perso_name', 'Email',  'api_token', 'UserName', 'password', 'Gender','department_id');
 
     public function books()
     {
         return $this->belongsToMany('Models\Book');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('App\models\Department');
     }
 
     public function bill()

@@ -11,14 +11,14 @@ class AuthController extends Controller
 {
 
     public function register(Request $request)
-    {//'perso_name', 'G_email', 'photo', 'access_token', 'user_id', 'password', 'major'
+    {// 'Gender','department_id'
         $validation = validator()->make($request->all(), [
             'perso_name' => 'required',
-            'G_email' => 'required|regex:/^.+@taibahu.edu.sa+$/i|unique:students',
-            'photo' => 'required',
+            'Email' => 'required|regex:/^.+@taibahu.edu.sa+$/i|unique:students',
+            'UserName' => 'required|unique:students',
             'password' => 'required|confirmed',
-            'major' => 'required',
-            'user_id'=>'0123'
+            'department_id' => 'required',
+            'Gender'=>'required'
         ]);
 
         if ($validation->fails()) {
@@ -31,20 +31,12 @@ class AuthController extends Controller
         $request->merge(array('password' => bcrypt($request->password)));
         $user = Student::create($request->all());
 
-        if ($request->hasFile('photo')) {
-            $path = public_path();
-            $destinationPath = $path . '/uploads/profile/'; // upload path
-            $logo = $request->file('photo');
-            $extension = $logo->getClientOriginalExtension(); // getting image extension
-            $name = time() . '' . rand(11111, 99999) . '.' . $extension; // renameing image
-            $logo->move($destinationPath, $name); // uploading file to given path
-            $user->update(['photo' => 'uploads/profile/' . $name]);
-        }
+
 
         if ($user) {
             $data = [
-                'access_token' => $api_token,
-                'user' => $user
+                'api_token' => $api_token,
+                'user' => $user->load('department')
             ];
 
             return responseJson(1,'تم التسجيل بنجاح',$data);
@@ -64,14 +56,14 @@ class AuthController extends Controller
             return responseJson(0,$validation->errors()->first(),$data);
         }
 
-        $user = Student::where('G_email', $request->input('email'))->first();
+        $user = Student::where('Email', $request->input('Email'))->first();
         if ($user)
         {
             if (Hash::check($request->password, $user->password))
             {
                 $data = [
-                    'access_token' => $user->access_token,
-                    'user' => $user,
+                    'api_token' => $user->api_token,
+                    'user' => $user->load('department'),
                 ];
                 return responseJson(1,'تم تسجيل الدخول',$data);
             }else{
@@ -97,35 +89,25 @@ class AuthController extends Controller
         if ($request->has('perso_name')) {
             $request->user()->update($request->only('perso_name'));
         }
-        if ($request->has('G_email')) {
-            $request->user()->update($request->only('G_email'));
+        if ($request->has('Email')) {
+            $request->user()->update($request->only('Email'));
         }
         if ($request->has('password')) {
             $request->merge(array('password' => bcrypt($request->password)));
             $request->user()->update($request->only('password'));
         }
 
-        if ($request->has('major')) {
-            $request->user()->update($request->only('major'));
+        if ($request->has('department_id')) {
+            $request->user()->update($request->only('department_id'));
         }
-//        if ($request->has('photo')) {
-//            if ($request->hasFile('photo')) {
-//                $path = public_path();
-//                $destinationPath = $path . '/uploads/items/'; // upload path
-//                $photo = $request->file('photo');
-//                $extension = $photo->getClientOriginalExtension(); // getting image extension
-//                $name = time() . '' . rand(11111, 99999) . '.' . $extension; // renameing image
-//                $photo->move($destinationPath, $name); // uploading file to given path
-//                $item->update(['photo' => 'uploads/items/' . $name]);
-//            }
-//
-//            $request->user()->update($request->only('photo'));
-//        }
+        if ($request->has('Gender')) {
+            $request->user()->update($request->only('Gender'));
+        }
 
 
 
         $data = [
-            'user' => $request->user()
+            'user' => $request->user()->load('department')
         ];
         return responseJson(1,'تم تحديث البيانات',$data);
     }

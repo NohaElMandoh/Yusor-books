@@ -8,6 +8,7 @@ use App\Models\Department;
 use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\TransactionType;
 use \Validator;
 use \Response;
 use App\models\Book;
@@ -123,6 +124,11 @@ class MainController extends Controller
     {
         $authers = Author::all();
         return responseJson(1,'تم التحميل',$authers);
+    }
+    public function transactions(Request $request)
+    {
+        $transaction_types = TransactionType::all();
+        return responseJson(1,'تم التحميل',$transaction_types);
     }
     public function departments(Request $request)
     {
