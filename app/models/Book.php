@@ -1,6 +1,6 @@
 <?php
 
-namespace Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,22 +13,22 @@ class Book extends Model
 
     public function author()
     {
-        return $this->belongsTo('Models\Author');
+        return $this->belongsTo('App\Models\Author');
     }
 
     public function department()
     {
-        return $this->belongsTo('Models\Department');
+        return $this->belongsTo('App\Models\Department');
     }
 
     public function students()
     {
-        return $this->belongsToMany('Models\Student');
+        return $this->belongsToMany('App\Models\Student');
     }
 
     public function bill()
     {
-        return $this->belongsTo('Models\Bill');
+        return $this->hasMany('App\Models\Bill');
     }
 
 }

@@ -34,9 +34,11 @@ class AuthController extends Controller
 
 
         if ($user) {
-            $data = [
+
+            $data =[
                 'api_token' => $api_token,
-                'user' => $user->load('department')
+                'user' => [$user],
+            'department'=>[$user->load('department')]
             ];
 
             return responseJson(1,'تم التسجيل بنجاح',$data);
@@ -47,7 +49,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validation = validator()->make($request->all(), [
-            'email' => 'required',
+            'email' => 'required|regex:/^.+@taibahu.edu.sa+$/i',
             'password' => 'required'
         ]);
 

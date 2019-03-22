@@ -201,3 +201,4 @@ function notifyByFirebase($title,$body,$tokens,$data = [],$type)
     curl_close($ch);
     return $result;
 }
+

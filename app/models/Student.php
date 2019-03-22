@@ -7,15 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model 
 {
 
-//            $table->string('Gender', 10);
-//            $table->integer('department_id')->unsigned();;
     protected $table = 'students';
     public $timestamps = true;
     protected $fillable = array('perso_name', 'Email',  'api_token', 'UserName', 'password', 'Gender','department_id');
 
     public function books()
     {
-        return $this->belongsToMany('Models\Book');
+        return $this->belongsToMany('App\Models\Book')->
+        withPivot('price', 'book_status', 'availability','transaction_types_id')->withTimestamps();
     }
 
     public function department()
@@ -25,7 +24,7 @@ class Student extends Model
 
     public function bill()
     {
-        return $this->belongsTo('Models\Bill');
+        return $this->hasMany('App\Models\Bill');
     }
     protected $hidden = [
         'password', 'api_token'

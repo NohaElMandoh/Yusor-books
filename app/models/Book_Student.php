@@ -1,6 +1,6 @@
 <?php
 
-namespace Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class Book_Student extends Model
 
     public function transactionType()
     {
-        return $this->belongsTo('Models\TransactionType');
+        return $this->belongsTo('App\Models\TransactionType');
     }
 
 }
