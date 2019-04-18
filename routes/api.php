@@ -18,7 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::group(['prefix' =>'v1'],function(){
 
-    Route::Post('add_book','Api\MainController@add_book');
     Route::get('authers','Api\MainController@authers');
     Route::get('departments','Api\MainController@departments');
     Route::post('books','Api\MainController@books');
@@ -30,11 +29,14 @@ Route::group(['prefix' =>'v1'],function(){
     Route::post('register','Api\AuthController@register');
 
     Route::post('login','Api\AuthController@login');
-
+    Route::post('reset-password', 'Api\AuthController@reset');
+    Route::post('check_code', 'Api\AuthController@check_code');
+    Route::post('update_password', 'Api\AuthController@update_password');
 
 
  Route::group(['middleware'=>'auth:students'],function(){
      Route::post('profile','Api\AuthController@profile');
+     Route::Post('add_book','Api\MainController@add_book');
      Route::post('create_offer','Api\MainController@create_offer');
      ///get all books which made by specific student
      Route::post('books_student','Api\MainController@books_student');
@@ -42,6 +44,8 @@ Route::group(['prefix' =>'v1'],function(){
      Route::post('create_bill','Api\MainController@create_bill');
 
      Route::post('Bills_sold','Api\MainController@Bills_sold');
+     Route::post('reports','Api\MainController@reports');
+
 
 
 

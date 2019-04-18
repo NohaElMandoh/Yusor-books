@@ -9,7 +9,7 @@ class Student extends Model
 
     protected $table = 'students';
     public $timestamps = true;
-    protected $fillable = array('perso_name', 'Email',  'api_token', 'UserName', 'password', 'Gender','department_id');
+    protected $fillable = array('perso_name', 'Email',  'api_token', 'UserName', 'password', 'Gender','department_id','firbase_id','pin_code');
 
     public function books()
     {
@@ -25,6 +25,9 @@ class Student extends Model
     public function bill()
     {
         return $this->hasMany('App\Models\Bill');
+    }
+    public function report(){
+        $this->hasMany('App\Models\Report');
     }
     protected $hidden = [
         'password', 'api_token'
